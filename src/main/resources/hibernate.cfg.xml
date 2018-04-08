@@ -1,0 +1,37 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<property name="cache.use_second_level_cache">false</property>
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		<property name="max_fetch_depth">2</property>
+		<property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="connection.autocommit">true</property>
+		<property name="cache.provider_configuration_file_resource_path">ehcache-hibernate.xml</property>
+		<!--  
+		<property name="enable_lazy_load_no_trans">true</property>
+		<property name="hbm2ddl.auto">update</property>
+		-->
+
+		<!-- 数据实体定义，此处设置主要用来生成数据库脚本（DDL） -->
+		<mapping class="com.empmanagesys.model.BaseModel" />
+		<mapping class="com.empmanagesys.model.Attendence" />
+		<mapping class="com.empmanagesys.model.AttendenceSet" />
+		<mapping class="com.empmanagesys.model.DepartmentModel" />
+		<mapping class="com.empmanagesys.model.DictionaryModel" />
+		<mapping class="com.empmanagesys.model.Insurance" />
+		<mapping class="com.empmanagesys.model.MenuModel" />
+		<mapping class="com.empmanagesys.model.OperateLogModel" />
+		<mapping class="com.empmanagesys.model.ResourceModel" />
+		<mapping class="com.empmanagesys.model.RoleModel" />
+		<mapping class="com.empmanagesys.model.Salary" />
+		<mapping class="com.empmanagesys.model.SalaryStandard" />
+		<mapping class="com.empmanagesys.model.UserModel" />
+		<mapping class="com.empmanagesys.model.UserSettingModel" />
+		<mapping class="com.empmanagesys.model.UserStatus" />
+	</session-factory>
+</hibernate-configuration>
