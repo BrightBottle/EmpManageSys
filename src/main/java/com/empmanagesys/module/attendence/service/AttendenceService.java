@@ -1,5 +1,6 @@
 package com.empmanagesys.module.attendence.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class AttendenceService extends BaseService{
  // 注入考勤设置信息处理Dao
     @Autowired
     private AttendenceSetDao attendenceSetDao;
-    
+
     /**
      * 获取考勤信息分页信息
      * 
@@ -125,7 +126,7 @@ public class AttendenceService extends BaseService{
     /**
      * 根据用户名，获取用户考勤信息
      * 
-     * @param userId
+     * @param name
      * @return
      */
    
@@ -133,5 +134,113 @@ public class AttendenceService extends BaseService{
         Attendence attendence = attendenceDao.getAttendence(name);
         return attendence;
     }
-    
+
+
+//最终考勤奖罚
+
+    /**
+     * 整合考勤奖罚信息
+     * @param name
+     * @return
+     */
+    public Double[] finalAttendenceMoney(String name){
+        List<Attendence> attendence = new ArrayList<>();
+		Attendence attendences = attendenceDao.getAttendence(name);
+		attendence.add(attendences);
+
+    	List<AttendenceSet> attendenceSet = attendenceSetDao.getAllAttendence();
+
+        Integer lateCome = null;
+    	Double lateComeSet=null;
+    	Integer earlyLeave = null;
+    	Double earlyLeaveSet=null;
+    	Integer vacate = null;
+    	Double vacateSet=null;
+    	Integer overtime = null;
+    	Double overtimeSet=null;
+    	Integer negletwork = null;
+    	Double negletworkSet=null;
+    	for (Attendence attendenceInfo : attendence) {
+    		 lateCome = attendenceInfo.getLateCome();
+    		 earlyLeave = attendenceInfo.getEarlyLeave();
+    		 vacate = attendenceInfo.getVacate();
+    		 overtime=attendenceInfo.getOvertime();
+    		 negletwork= attendenceInfo.getNegletwork();
+
+    	}
+		for (AttendenceSet attendenceSetInfo : attendenceSet) {
+			lateComeSet = attendenceSetInfo.getLateCome();
+			 earlyLeaveSet = attendenceSetInfo.getEarlyLeave();
+    		 vacateSet = attendenceSetInfo.getVacate();
+    		 overtimeSet =attendenceSetInfo.getOvertime();
+    		 negletworkSet = attendenceSetInfo.getNegletwork();
+		}
+		Double sumLateCome = (lateCome*lateComeSet);
+		Double sumEarlyLeave = (earlyLeave*earlyLeaveSet);
+		Double sumVacate = (vacate*vacateSet);
+		Double sumOvertime = (overtime*overtimeSet);
+		Double sumNegletwork = (negletwork*negletworkSet);
+
+        Double[] finalAttendenceMoney = new Double[5];
+        finalAttendenceMoney[0] = sumLateCome;
+        finalAttendenceMoney[1] = sumEarlyLeave;
+        finalAttendenceMoney[2] = sumVacate;
+        finalAttendenceMoney[3] = sumOvertime;
+        finalAttendenceMoney[4] = sumNegletwork;
+	    return finalAttendenceMoney;
+    }
+
+    /**
+     * 整合所有考勤奖罚信息
+     * @param
+     * @return
+     */
+    public Double[][] AllFinalAttendenceMoney() {
+        List<Attendence> attendence = attendenceDao.getAll();
+
+        List<AttendenceSet> attendenceSet = attendenceSetDao.getAllAttendence();
+
+        Integer lateCome = null;
+        Double lateComeSet = null;
+        Integer earlyLeave = null;
+        Double earlyLeaveSet = null;
+        Integer vacate = null;
+        Double vacateSet = null;
+        Integer overtime = null;
+        Double overtimeSet = null;
+        Integer negletwork = null;
+        Double negletworkSet = null;
+        for (Attendence attendenceInfo : attendence) {
+            lateCome = attendenceInfo.getLateCome();
+            earlyLeave = attendenceInfo.getEarlyLeave();
+            vacate = attendenceInfo.getVacate();
+            overtime = attendenceInfo.getOvertime();
+            negletwork = attendenceInfo.getNegletwork();
+
+        }
+        for (AttendenceSet attendenceSetInfo : attendenceSet) {
+            lateComeSet = attendenceSetInfo.getLateCome();
+            earlyLeaveSet = attendenceSetInfo.getEarlyLeave();
+            vacateSet = attendenceSetInfo.getVacate();
+            overtimeSet = attendenceSetInfo.getOvertime();
+            negletworkSet = attendenceSetInfo.getNegletwork();
+        }
+        Double sumLateCome = (lateCome * lateComeSet);
+        Double sumEarlyLeave = (earlyLeave * earlyLeaveSet);
+        Double sumVacate = (vacate * vacateSet);
+        Double sumOvertime = (overtime * overtimeSet);
+        Double sumNegletwork = (negletwork * negletworkSet);
+
+        Double[][] finalAttendenceMoney = new Double[12][5];
+        for (int i = 0; i < 12; i++) {
+            finalAttendenceMoney[i][0] = sumLateCome;
+            finalAttendenceMoney[i][1] = sumEarlyLeave;
+            finalAttendenceMoney[i][2] = sumVacate;
+            finalAttendenceMoney[i][3] = sumOvertime;
+            finalAttendenceMoney[i][4] = sumNegletwork;
+        }
+        System.out.println("finalAttendenceMoney"+finalAttendenceMoney);
+            return finalAttendenceMoney;
+    }
+
 }

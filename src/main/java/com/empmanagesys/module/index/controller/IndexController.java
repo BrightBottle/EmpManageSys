@@ -49,11 +49,11 @@ public class IndexController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/navigation/menu")
-    public String menu(Model model) {
-        // 传递用户拥有的菜单信息
-        model.addAttribute("userMenus", userService.getCurrentUserMenus());
-        // 转向（forward）前端页面，文件：/WEB-INF/views/navigation/menu.jsp
-        return "/navigation/menu";
-    }
+//    @RequestMapping(value = "/navigation/menu")
+//    public String menu(Model model) {
+//        // 传递用户拥有的菜单信息
+//        model.addAttribute("userMenus", userService.getCurrentUserMenus());
+//        // 转向（forward）前端页面，文件：/WEB-INF/views/navigation/menu.jsp
+//        return "/navigation/menu";
+//    }
 }

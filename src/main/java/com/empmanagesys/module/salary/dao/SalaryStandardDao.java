@@ -44,7 +44,7 @@ public class SalaryStandardDao extends BaseHibernateDao<SalaryStandard, Long>{
     /**
      * 根据条件查询标准薪资信息
      * 
-     * @param loginName 登录名称
+     * @param name 登录名称
      * @return
      */
     public SalaryStandard getSalaryStandard(String name) {

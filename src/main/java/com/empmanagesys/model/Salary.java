@@ -47,6 +47,7 @@ public class Salary extends BaseModel{
     private double medical;       //医疗保险
 	@Column
     private double house;          //公积金
+
  
     public String getEmpId() {
         return empId;
